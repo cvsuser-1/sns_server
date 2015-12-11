@@ -39,7 +39,7 @@ import hello.bookmarks.BookmarkRepository;
 @SpringBootApplication
 public class Application {
 
-	@Bean
+ 	@Bean
 	CommandLineRunner init(AccountRepository accountRepository,
 						   BookmarkRepository bookmarkRepository) {
 		return (evt) -> Arrays.asList(
@@ -54,12 +54,43 @@ public class Application {
 									"http://bookmark.com/2/" + a, "A description"));
 						});
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 }
 
+@RestController
+@RequestMapping("/{userId}/bookmarks/{param}")
+class BookmarkRestControllerTest {
 
+    private final BookmarkRepository bookmarkRepository;
+
+    private final AccountRepository accountRepository;
+
+
+    @RequestMapping(method = RequestMethod.POST)
+    ResponseEntity<?> add(@PathVariable String userId, @PathVariable String param, @RequestBody Bookmark input) {
+        System.out.println(param);
+        return null;
+    }
+    @RequestMapping(method = RequestMethod.GET)
+    Collection<Bookmark> readBookmarks(@PathVariable String userId) {
+        return this.bookmarkRepository.findByAccountUsername(userId);
+    }
+    @Autowired
+    BookmarkRestControllerTest(BookmarkRepository bookmarkRepository,
+                               AccountRepository accountRepository) {
+        this.bookmarkRepository = bookmarkRepository;
+        this.accountRepository = accountRepository;
+        System.out.println(bookmarkRepository);
+    }
+
+    private void validateUser(String userId) {
+        this.accountRepository.findByUsername(userId).orElseThrow(
+                () -> new UserNotFoundException(userId));
+    }
+}
 
 @RestController
 @RequestMapping("/{userId}/bookmarks")
@@ -74,7 +105,7 @@ class BookmarkRestController {
 		this.validateUser(userId);
 		/*
 		 curl test cmd:
-		    curl -H "Content-Type: application/json" -X POST  --data '{"uri":"http://news.sina.com.cn","description":"新浪新闻首页"}'  http://127.0.0.1:8080/dsyer/bookmarks
+		    curl -i -H "Content-Type: application/json" -X POST  --data '{"uri":"http://news.sina.com.cn","description":"新浪新闻首页"}'  http://127.0.0.1:8080/dsyer/bookmarks
 
 		 */
 		return this.accountRepository
@@ -125,18 +156,4 @@ class UserNotFoundException extends RuntimeException {
 	}
 }
 
-@RestController
-@RequestMapping("/{userId}/bookmarks/{param}")
-class BookmarkRestControllerTest {
-	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<?> add(@PathVariable String userId, @PathVariable String param, @RequestBody Bookmark input) {
-		System.out.println(param);
-		return null;
-	}
 
-	@Autowired
-	BookmarkRestControllerTest(BookmarkRepository bookmarkRepository,
-						   AccountRepository accountRepository) {
-		System.out.println(bookmarkRepository);
-	}
-}
