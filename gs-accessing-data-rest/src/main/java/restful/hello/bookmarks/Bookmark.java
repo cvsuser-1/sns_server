@@ -1,4 +1,4 @@
-package hello.bookmarks;
+package restful.hello.bookmarks;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
