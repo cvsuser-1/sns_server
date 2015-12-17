@@ -23,4 +23,11 @@ public class Caregiver extends AccountBase {
 
     Caregiver() { // jpa only
     }
+
+	@Override
+	public String toString() {
+		return "Caregiver [patients=" + patients + ", password=" + password + ", username=" + username + ", id=" + id
+				+ "]";
+	}
+    
 }

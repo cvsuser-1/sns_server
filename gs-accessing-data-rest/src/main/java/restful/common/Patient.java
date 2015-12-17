@@ -47,4 +47,12 @@ public class Patient extends AccountBase {
     public String getUsername() {
         return username;
     }
+
+	@Override
+	public String toString() {
+		return "Patient [eHR=" + eHR + ", clinician=" + clinician + ", caregiver=" + caregiver + ", password="
+				+ password + ", username=" + username + ", id=" + id + "]";
+	}
+    
+    
 }

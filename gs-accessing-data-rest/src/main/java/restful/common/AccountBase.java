@@ -28,8 +28,7 @@ public abstract class AccountBase implements Serializable {
 	@JsonIgnore
     protected String password;
     protected String username;    
-    
-  
+   
     @Id
     @GeneratedValue
     protected Long id;
