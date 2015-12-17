@@ -1,8 +1,6 @@
 package restful.hello.restcontroller;
 
 import java.util.Collection;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import restful.hello.bookmarks.Account;
 import restful.hello.bookmarks.AccountRepository;
 import restful.hello.bookmarks.Bookmark;
 import restful.hello.bookmarks.BookmarkRepository;
@@ -23,8 +20,6 @@ import restful.hello.bookmarks.BookmarkRepository;
 @RestController
 @RequestMapping("/{userId}/bookmarks")
 class BookmarkRestController {
-
-	private static final boolean Account = false;
 
 	private final BookmarkRepository bookmarkRepository;
 
@@ -36,12 +31,12 @@ class BookmarkRestController {
 		/*
 		 * curl test cmd: curl -i -H
 		 * "Content-Type: application/json;charset=Unicode" -X POST --data
-		 * '{"uri":"http://news.sina.com.cn","description":"新浪网首页"}'
+		 * '{"uri":"http://news.sina.com.cn","description":"新浪网新闻频道首页"}'
 		 * http://127.0.0.1:8080/dsyer/bookmarks
 		 * 
 		 */
 
-		return this.accountRepository.findByUsername(userId).map( account -> {
+		return this.accountRepository.findByUsername(userId).map(account -> {
 			Bookmark result = bookmarkRepository.save(new Bookmark(account, input.uri, input.description));
 
 			HttpHeaders httpHeaders = new HttpHeaders();
@@ -85,16 +80,17 @@ class BookmarkRestController {
 	}
 
 	private void validateUser(String userId) {
-		/*
-		 * this.accountRepository.findByUsername(userId).orElseThrow( () -> new
-		 * UserNotFoundException(userId));
-		 */
-		boolean isEmpty = this.accountRepository.findByUsername(userId).isEmpty();
-		if (isEmpty)
-			throw new UserNotFoundException(userId);
+
+		this.accountRepository.findByUsername(userId).orElseThrow(() -> new UserNotFoundException(userId));
+		//
+		// boolean isEmpty =
+		// this.accountRepository.findByUsername(userId).isEmpty();
+		// if (isEmpty)
+		// throw new UserNotFoundException(userId);
 	}
 }
 
+@SuppressWarnings("serial")
 @ResponseStatus(HttpStatus.NOT_FOUND)
 class UserNotFoundException extends RuntimeException {
 
@@ -108,8 +104,6 @@ class UserNotFoundException extends RuntimeException {
 class BookmarkRestControllerTest {
 
 	private final BookmarkRepository bookmarkRepository;
-
-	private final AccountRepository accountRepository;
 
 	@RequestMapping(method = RequestMethod.POST)
 	ResponseEntity<?> add(@PathVariable String userId, @PathVariable String param, @RequestBody Bookmark input) {
@@ -125,7 +119,6 @@ class BookmarkRestControllerTest {
 	@Autowired
 	BookmarkRestControllerTest(BookmarkRepository bookmarkRepository, AccountRepository accountRepository) {
 		this.bookmarkRepository = bookmarkRepository;
-		this.accountRepository = accountRepository;
 		System.out.println(bookmarkRepository);
 	}
 }
