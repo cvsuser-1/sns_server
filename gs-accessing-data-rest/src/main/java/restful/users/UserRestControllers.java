@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import restful.common.AccountBase;
 import restful.common.Patient;
+import restful.debug.Log;
 import restful.repositories.AccountBaseRepository;
 import restful.repositories.CaregiversRepository;
 import restful.repositories.ClinicianRepository;
@@ -42,20 +43,20 @@ public class UserRestControllers {
 		this.accountBaseRepository = accountBaseRepository;
 	}
 
-	@RequestMapping(path = "precheck", consumes = "text/json")
+	@RequestMapping(path="precheck", consumes = "text/json")
 	String checkUserValid(@RequestBody String userId) {
 		return "Ok";
 	}
 
-	@RequestMapping(path = "register", method = RequestMethod.POST, params = "usertype=patient", produces = "text/json")
-	ResponseEntity<?> addPatient(@PathVariable String userId, @RequestBody Patient input) {
+	@RequestMapping(path="register", method=RequestMethod.POST, params="usertype=patient", consumes="application/json")
+	ResponseEntity<?> addPatient(@RequestBody Patient input) {
 
 		/*
 		 * curl test cmd: 
 		 */
-		// curl -i -H "Content-Type: text/json;charset=Unicode" -X POST --data '{"uri":"http://news.sina.com.cn","description":""}' http://127.0.0.1:8080/user/register?usertype=patient
+		// curl -i -H "Content-Type: application/json;charset=UTF-8" -H "Accept: application/json" -X POST --data '{"username":"ghq","id":"whats"}' http://127.0.0.1:8080/user/register?usertype=patient
 		
-		this.isExsit(userId);
+		Log.i("UserRestControllers", "addPatient " + "input=" + input.getUsername());
 		Patient result = this.patientsRepository.save(input);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -65,11 +66,17 @@ public class UserRestControllers {
 
 	}
 
+	@RequestMapping(path="register", method=RequestMethod.GET, produces="application/json")
+	Patient GetPatients() {
+
+		return new Patient("name", "password");
+
+	}
+
 	private void isExsit(String userId) {
 		if (!this.accountBaseRepository.findByUsername(userId).isPresent())
 			throw new UserHasExsitException(userId);
 	}
-
 }
 
 @ResponseStatus(HttpStatus.CONFLICT)
