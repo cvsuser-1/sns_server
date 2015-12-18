@@ -1,4 +1,4 @@
-package hello;
+package restful.hello;
 
 import java.util.List;
 
