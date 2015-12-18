@@ -1,9 +1,6 @@
 package restful.hello.restcontroller;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import restful.hello.bookmarks.Account;
 import restful.hello.bookmarks.AccountRepository;
 import restful.hello.bookmarks.Bookmark;
 import restful.hello.bookmarks.BookmarkRepository;
@@ -48,21 +44,6 @@ class BookmarkRestController {
 					.buildAndExpand(result.getId()).toUri());
 			return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
 		}).get();
-
-		// Optional<Account> account =
-		// this.accountRepository.findByUsername(userId);
-		// HttpHeaders httpHeaders = new HttpHeaders();
-		//
-		// Bookmark result = bookmarkRepository.save(new Bookmark(account.get(),
-		// input.uri, input.description));
-		//
-		// httpHeaders.setLocation(
-		// ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri());
-		//
-		// System.out.println("teddy run here: " + account);
-		//
-		// return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
-
 	}
 
 	@RequestMapping(value = "/{bookmarkId}", method = RequestMethod.GET)
@@ -103,26 +84,3 @@ class UserNotFoundException extends RuntimeException {
 	}
 }
 
-@RestController
-@RequestMapping("/{userId}/bookmarks/{param}")
-class BookmarkRestControllerTest {
-
-	private final BookmarkRepository bookmarkRepository;
-
-	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<?> add(@PathVariable String userId, @PathVariable String param, @RequestBody Bookmark input) {
-		System.out.println(param);
-		return null;
-	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	Collection<Bookmark> readBookmarks(@PathVariable String userId) {
-		return this.bookmarkRepository.findByAccountUsername(userId);
-	}
-
-	@Autowired
-	BookmarkRestControllerTest(BookmarkRepository bookmarkRepository, AccountRepository accountRepository) {
-		this.bookmarkRepository = bookmarkRepository;
-		System.out.println(bookmarkRepository);
-	}
-}
