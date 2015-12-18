@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 public class Clinician extends AccountBase {
 
-    
+	public static final String ACCOUNT_TYPE = "Clinician";
     @OneToMany(mappedBy="clinician")
     private Set<Patient> patients = new HashSet<>();
 

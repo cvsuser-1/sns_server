@@ -12,6 +12,7 @@ import java.util.Set;
 @Entity
 public class Patient extends AccountBase {
 
+	public static final String ACCOUNT_TYPE = "Patient";
 	/**
 	 * 
 	 */

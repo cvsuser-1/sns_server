@@ -9,6 +9,7 @@ import java.util.Set;
 @Entity
 public class Caregiver extends AccountBase {
 
+	public static final String ACCOUNT_TYPE = "Caregiver";
     /**
 	 * 
 	 */

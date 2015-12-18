@@ -21,6 +21,7 @@ import javax.persistence.Table;
 @Table(name = "PERSISTENCE_ACCOUNT")
 public abstract class AccountBase implements Serializable {
 
+	public static final String ACCOUNT_TYPE_PARAM_NAME = "usertype";
     /**
 	 * 
 	 */
