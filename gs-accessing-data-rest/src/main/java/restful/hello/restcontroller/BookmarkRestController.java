@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import restful.debug.exception.UserNotFoundException;
 import restful.hello.bookmarks.AccountRepository;
 import restful.hello.bookmarks.Bookmark;
 import restful.hello.bookmarks.BookmarkRepository;
 
 @RestController
-@RequestMapping("/{userId}/bookmarks")
+@RequestMapping("/hello/restful/{userId}/bookmarks")
 class BookmarkRestController {
 
 	private final BookmarkRepository bookmarkRepository;
@@ -74,13 +75,3 @@ class BookmarkRestController {
 		// throw new UserNotFoundException(userId);
 	}
 }
-
-@SuppressWarnings("serial")
-@ResponseStatus(HttpStatus.NOT_FOUND)
-class UserNotFoundException extends RuntimeException {
-
-	public UserNotFoundException(String userId) {
-		super("could not find user '" + userId + "'.");
-	}
-}
-
