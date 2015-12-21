@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,14 +18,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 import restful.common.AccountBase;
 import restful.common.Caregiver;
 import restful.common.Clinician;
 import restful.common.Patient;
 import restful.debug.Log;
-import restful.repositories.AccountBaseRepository;
 import restful.repositories.CaregiversRepository;
 import restful.repositories.CliniciansRepository;
 import restful.repositories.EHRRepository;
@@ -36,7 +33,6 @@ import restful.repositories.PatientsRepository;
 @RequestMapping("/user")
 public class UserRestControllers {
 
-	private final AccountBaseRepository accountBaseRepository;
 	private final PatientsRepository patientsRepository;
 	private final EHRRepository eHRRepository;
 	private final CliniciansRepository cliniciansRepository;
@@ -44,14 +40,12 @@ public class UserRestControllers {
 
 	@Autowired
 	public UserRestControllers(PatientsRepository patientsRepository, EHRRepository eHRRepository,
-			CliniciansRepository cliniciansRepository, CaregiversRepository caregiversRepository,
-			AccountBaseRepository accountBaseRepository) {
+			CliniciansRepository cliniciansRepository, CaregiversRepository caregiversRepository) {
 		super();
 		this.patientsRepository = patientsRepository;
 		this.eHRRepository = eHRRepository;
 		this.cliniciansRepository = cliniciansRepository;
 		this.caregiversRepository = caregiversRepository;
-		this.accountBaseRepository = accountBaseRepository;
 	}
 
 	@RequestMapping(path = "precheck", consumes = "text/json")
@@ -94,6 +88,7 @@ public class UserRestControllers {
 
 	}
 
+	@Deprecated
 	@RequestMapping(path="register", method=RequestMethod.POST, params="usertype=Patient", consumes="application/json")
 	ResponseEntity<?> addPatient(@RequestBody Patient input) {
 
@@ -114,6 +109,7 @@ public class UserRestControllers {
 
 	}
 
+	@Deprecated
 	@RequestMapping(path = "register", method=RequestMethod.POST, params="usertype=Clinician", consumes="application/json")
 	ResponseEntity<?> addClinician(@RequestBody Clinician input) {
 
@@ -134,6 +130,7 @@ public class UserRestControllers {
 
 	}
 
+	@Deprecated
 	@RequestMapping(path="register", method=RequestMethod.POST, params ="usertype=Caregiver", consumes="application/json")
 	ResponseEntity<?> addCaregiver(@RequestBody Caregiver input) {
 
@@ -162,7 +159,7 @@ public class UserRestControllers {
 	}
 
 	private void isExsit(String userId) {
-		if (!this.accountBaseRepository.findByUsername(userId).isPresent())
+		if (!this.patientsRepository.findByUsername(userId).isPresent())
 			throw new UserHasExsitException(userId);
 	}
 }

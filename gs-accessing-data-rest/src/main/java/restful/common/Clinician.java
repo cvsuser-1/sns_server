@@ -9,6 +9,10 @@ import java.util.Set;
 @Entity
 public class Clinician extends AccountBase {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final String ACCOUNT_TYPE = "Clinician";
     @OneToMany(mappedBy="clinician")
     private Set<Patient> patients = new HashSet<>();
