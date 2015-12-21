@@ -130,7 +130,7 @@ class BookmarkResourceS extends ResourceSupport {
 }
 
 @RestController
-@RequestMapping("/bookmarks")
+@RequestMapping("/hello/security/bookmarks")
 public class SecurityBookmarkRestController {
 
 	private final BookmarkRepository bookmarkRepository;

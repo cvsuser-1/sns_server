@@ -19,7 +19,7 @@ import restful.hello.bookmarks.BookmarkRepository;
 
 @RestController
 @RequestMapping("/hello/restful/{userId}/bookmarks")
-class BookmarkRestController {
+public class BookmarkRestController {
 
 	private final BookmarkRepository bookmarkRepository;
 
