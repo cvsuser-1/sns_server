@@ -31,7 +31,7 @@ public class BookmarkRestController {
 		/*
 		 * curl test cmd: curl -i -H
 		 * "Content-Type: application/json;charset=Unicode" -X POST --data
-		 * '{"uri":"http://news.sina.com.cn","description":"新浪网新闻频道首页"}'
+		 * '{"uri":"http://news.sina.com.cn","description":""}'
 		 * http://127.0.0.1:8080/dsyer/bookmarks
 		 * 
 		 */
