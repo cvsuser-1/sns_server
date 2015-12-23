@@ -10,7 +10,7 @@ security:
 #https://api.weibo.com/oauth2/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=authorization_code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI&code=CODE
 #https://api.weibo.com/oauth2/access_token
 #https://api.weibo.com/oauth2/authorize
-Weibo:
+sinaweibo:
   client:
     clientId: 3743478173
     clientSecret: 4453fbc77c9a28b5a30cfd25a9d0d360
@@ -49,9 +49,5 @@ spring:
   resources:
     chain:
       enabled: true
-      
-# Show or not log for each sql query
-  jpa.show-sql: true
-# Hibernate ddl auto (create, create-drop, update)
-  jpa.hibernate.ddl-auto: update
+
   profiles.active: dev      

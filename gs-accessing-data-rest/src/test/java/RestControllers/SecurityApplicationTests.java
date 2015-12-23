@@ -30,7 +30,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import restful.Application;
+import restful.PLMApplication;
 
 
 /**
@@ -38,7 +38,7 @@ import restful.Application;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringApplicationConfiguration(classes = PLMApplication.class)
 @IntegrationTest("server.port=0")
 @WebAppConfiguration
 public class SecurityApplicationTests {

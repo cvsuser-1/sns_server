@@ -5,20 +5,9 @@ import java.security.Principal;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,43 +25,31 @@ import restful.common.Caregiver;
 import restful.common.Clinician;
 import restful.common.Patient;
 import restful.debug.Log;
-import restful.hello.bookmarks.AccountRepository;
 import restful.repositories.CaregiversRepository;
 import restful.repositories.CliniciansRepository;
 import restful.repositories.EHRRepository;
 import restful.repositories.PatientsRepository;
 
-@Configuration
-@EnableOAuth2Sso
-class HttpSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-
-		http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**", "/webjars/**").permitAll().anyRequest()
-				.authenticated();
-	}
-}
-
-@Configuration
-class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
-
-	@Autowired
-	AccountRepository accountRepository;
-
-	@Override
-	public void init(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService());
-	}
-
-	@Bean
-	UserDetailsService userDetailsService() {
-		return (username) -> accountRepository.findByUsername(username)
-				.map(a -> new User(a.username, a.password, true, true, true, true,
-						AuthorityUtils.createAuthorityList("USER", "write")))
-				.orElseThrow(() -> new UsernameNotFoundException("could not find the user '" + username + "'"));
-	}
-}
+//@Configuration
+//class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
+//
+//	@Autowired
+//	AccountRepository accountRepository;
+//
+//	@Override
+//	public void init(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.userDetailsService(userDetailsService());
+//	}
+//
+//	@Bean
+//	UserDetailsService userDetailsService() {
+//		return (username) -> accountRepository.findByUsername(username)
+//				.map(a -> new User(a.username, a.password, true, true, true, true,
+//						AuthorityUtils.createAuthorityList("USER", "write")))
+//				.orElseThrow(() -> new UsernameNotFoundException("could not find the user '" + username + "'"));
+//	}
+//}
 
 @RestController
 @RequestMapping("/user")

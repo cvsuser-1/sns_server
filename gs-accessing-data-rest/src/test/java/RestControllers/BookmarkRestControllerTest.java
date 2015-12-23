@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import restful.Application;
+import restful.PLMApplication;
 import restful.hello.bookmarks.Account;
 import restful.hello.bookmarks.AccountRepository;
 import restful.hello.bookmarks.Bookmark;
@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
  * @author Josh Long
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringApplicationConfiguration(classes = PLMApplication.class)
 @WebAppConfiguration
 public class BookmarkRestControllerTest {
 

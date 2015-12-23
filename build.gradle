@@ -26,25 +26,17 @@ allprojects {
 }
 subprojects {
     ext {
-        slf4jVersion = '1.7.7'
-        springVersion = '4.2.1.RELEASE'
-        hibernateVersion = '4.3.1.Final'
+        
     }
     [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
     repositories {
         mavenCentral()
     }
-    configurations {
-        all*.exclude module: 'commons-logging'
-    }
+    
     dependencies {
-        compile(
-                
-        )
-        testCompile(
-          "org.springframework:spring-test:$springVersion",
-          "junit:junit:4.11"
-        )
+      compile 'commons-codec:commons-codec:1.6'
+    	testCompile  'junit:junit:4.12'
+    	testCompile  'com.jayway.jsonpath:json-path:2.1.0'
     }
 }
 
