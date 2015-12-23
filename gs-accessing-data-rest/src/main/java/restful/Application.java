@@ -25,17 +25,13 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
-
 import restful.hello.bookmarks.Account;
 import restful.hello.bookmarks.AccountRepository;
 import restful.hello.bookmarks.Bookmark;
 import restful.hello.bookmarks.BookmarkRepository;
 
-/*@Configuration
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-@ComponentScan*/
 @SpringBootApplication
-public class Application {
+public class Application  {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -94,16 +90,16 @@ public class Application {
 		Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
 		try {
 			File keystore = new ClassPathResource("tomcat.keystore").getFile();
-			//File truststore = new ClassPathResource("keystore").getFile();
+			// File truststore = new ClassPathResource("keystore").getFile();
 			connector.setScheme("https");
 			connector.setSecure(true);
 			connector.setPort(8443);
 			protocol.setSSLEnabled(true);
 			protocol.setKeystoreFile(keystore.getAbsolutePath());
 			protocol.setKeystorePass("123456");
-			//protocol.setTruststoreFile(truststore.getAbsolutePath());
-			//protocol.setTruststorePass("changeit");
-			//protocol.setKeyAlias("apitester");
+			// protocol.setTruststoreFile(truststore.getAbsolutePath());
+			// protocol.setTruststorePass("changeit");
+			// protocol.setKeyAlias("apitester");
 			return connector;
 		} catch (IOException ex) {
 			throw new IllegalStateException(

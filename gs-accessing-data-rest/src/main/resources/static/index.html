@@ -1,9 +1,17 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<title>Hello AngularJS</title>
-<link rel='stylesheet' href='/webjars/bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
-
+    <meta charset="utf-8"/>
+    <meta property="wb:webmaster" content="73e69228c954c263" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello AngularJS</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <!--link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/ -->
+    <link rel='stylesheet' type="text/css" href='/webjars/bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
 [ng\:cloak], [ng-cloak], .ng-cloak {
 	display: none !important;
@@ -11,7 +19,15 @@
 </style>
 </head>
 
-<body ng-app="hello">
+	<body ng-app="app" ng-controller="home as home">
+	<div class="container" ng-show="!home.authenticated">
+	Login with: <a href="/login">Facebook</a>
+	<a href="/login">Sina Weibo</a>
+  </div>
+<div class="container" ng-show="home.authenticated">
+	Logged in as: <span ng-bind="home.user"></span>
+</div>
+
 	<div class="container">
 		<h1>Greeting</h1>
 		<div ng-controller="home" ng-cloak class="ng-cloak">
@@ -19,8 +35,18 @@
 			<p>The content is {{greeting.content}}</p>
 		</div>
 	</div>
-	<script src="/webjars/jquery/3.0.0-alpha1/jquery.js" type="text/javascript"></script>
-	<script src="/webjars/angularjs/2.0.0-alpha.19/angular2.js" type="text/javascript"></script>
-	<script src="js/hello.js"></script>
+	<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
+<script type="text/javascript">
+  angular.module("app", []).controller("home", function($http) {
+    var self = this;
+    $http.get("/user").success(function(data) {
+      self.user = data.userAuthentication.details.name;
+      self.authenticated = true;
+    }).error(function() {
+      self.user = "N/A";
+      self.authenticated = false;
+    });
+  });
+</script>
 </body>
 </html>
