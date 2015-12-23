@@ -22,6 +22,7 @@ import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
@@ -59,14 +60,21 @@ import org.springframework.web.util.WebUtils;
 
 @Configuration
 @RestController
-@EnableOAuth2Client
+@EnableOAuth2Sso
 @EnableAuthorizationServer
 @Order(6)
 public class MainRestController extends WebSecurityConfigurerAdapter {
 
-	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
-
+	
+	@Autowired
+	public MainRestController(OAuth2ClientContext oauth2ClientContext) {
+		super();
+		this.oauth2ClientContext = oauth2ClientContext;
+	}
+  public MainRestController() {
+    super();
+	}
 	@RequestMapping({ "/study/user", "/study/me" })
 	public Map<String, String> user(Principal principal) {
 		Map<String, String> map = new LinkedHashMap<>();
@@ -129,35 +137,29 @@ public class MainRestController extends WebSecurityConfigurerAdapter {
 		});
 	}
 
-
-	@Bean
-	public EmbeddedServletContainerFactory servletContainer() {
-		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-		tomcat.addAdditionalTomcatConnectors(createSslConnector());
-		return tomcat;
-	}
-
-	private Connector createSslConnector() {
-		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-		Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
-		try {
-			File keystore = new ClassPathResource("tomcat.keystore").getFile();
-			// File truststore = new ClassPathResource("keystore").getFile();
-			connector.setScheme("https");
-			connector.setSecure(true);
-			connector.setPort(8443);
-			protocol.setSSLEnabled(true);
-			protocol.setKeystoreFile(keystore.getAbsolutePath());
-			protocol.setKeystorePass("123456");
-			// protocol.setTruststoreFile(truststore.getAbsolutePath());
-			// protocol.setTruststorePass("changeit");
-			// protocol.setKeyAlias("apitester");
-			return connector;
-		} catch (IOException ex) {
-			throw new IllegalStateException(
-					"can't access keystore: [" + "keystore" + "] or truststore: [" + "keystore" + "]", ex);
-		}
-	}
+	/*
+	 * @Bean public EmbeddedServletContainerFactory servletContainer() {
+	 * TomcatEmbeddedServletContainerFactory tomcat = new
+	 * TomcatEmbeddedServletContainerFactory();
+	 * tomcat.addAdditionalTomcatConnectors(createSslConnector()); return
+	 * tomcat; }
+	 * 
+	 * private Connector createSslConnector() { Connector connector = new
+	 * Connector("org.apache.coyote.http11.Http11NioProtocol");
+	 * Http11NioProtocol protocol = (Http11NioProtocol)
+	 * connector.getProtocolHandler(); try { File keystore = new
+	 * ClassPathResource("tomcat.keystore").getFile(); // File truststore = new
+	 * ClassPathResource("keystore").getFile(); connector.setScheme("https");
+	 * connector.setSecure(true); connector.setPort(8443);
+	 * protocol.setSSLEnabled(true);
+	 * protocol.setKeystoreFile(keystore.getAbsolutePath());
+	 * protocol.setKeystorePass("123456"); //
+	 * protocol.setTruststoreFile(truststore.getAbsolutePath()); //
+	 * protocol.setTruststorePass("changeit"); //
+	 * protocol.setKeyAlias("apitester"); return connector; } catch (IOException
+	 * ex) { throw new IllegalStateException( "can't access keystore: [" +
+	 * "keystore" + "] or truststore: [" + "keystore" + "]", ex); } }
+	 */
 
 	@Bean
 	public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
@@ -187,21 +189,23 @@ public class MainRestController extends WebSecurityConfigurerAdapter {
 
 	private Filter ssoFilter() {
 		CompositeFilter filter = new CompositeFilter();
+
 		List<Filter> filters = new ArrayList<>();
 		filters.add(ssoFilter(facebook(), "/login/facebook"));
 		filters.add(ssoFilter(github(), "/login/github"));
+
 		filter.setFilters(filters);
 		return filter;
 	}
 
 	private Filter ssoFilter(ClientResources client, String path) {
-		OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
+		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
 				path);
 		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
-		facebookFilter.setRestTemplate(facebookTemplate);
-		facebookFilter.setTokenServices(
+		filter.setRestTemplate(facebookTemplate);
+		filter.setTokenServices(
 				new UserInfoTokenServices(client.getResource().getUserInfoUri(), client.getClient().getClientId()));
-		return facebookFilter;
+		return filter;
 	}
 
 	private Filter csrfHeaderFilter() {
