@@ -1,0 +1,39 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    apply plugin: 'spring-boot'
+    group = 'com.hybroad'
+    version = '1.0'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+subprojects {
+    ext {
+        slf4jVersion = '1.7.7'
+        springVersion = '4.2.1.RELEASE'
+        hibernateVersion = '4.3.1.Final'
+    }
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+    repositories {
+        mavenCentral()
+    }
+    configurations {
+        all*.exclude module: 'commons-logging'
+    }
+    dependencies {
+        compile(
+                
+        )
+        testCompile(
+          "org.springframework:spring-test:$springVersion",
+          "junit:junit:4.11"
+        )
+    }
+}
+
+
