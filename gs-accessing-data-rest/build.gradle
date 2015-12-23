@@ -25,38 +25,35 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile(
-      'org.springframework.boot:spring-boot-starter-data-jpa'
-      //'org.springframework.boot:spring-boot-starter-data-mongodb'
-      'org.springframework.boot:spring-boot-starter-data-rest'
-      'org.springframework.data:spring-data-rest-hal-browser'
-      //'org.springframework.boot:spring-boot-starter-freemarker'
-      'org.springframework.boot:spring-boot-starter-hateoas'
-      'org.springframework.boot:spring-boot-starter-mobile'
-      'io.ratpack:ratpack-spring-boot:1.1.1'
-      //'org.springframework.boot:spring-boot-starter-redis'    
-      'org.springframework.session:spring-session'
-      'org.springframework.boot:spring-boot-starter-web'
-      'com.h2database:h2'
-      'mysql:mysql-connector-java'
-      
-      'org.webjars:jquery:3.0.0-alpha1'
-      'org.webjars:angularjs:2.0.0-alpha.19'
-      'org.webjars:bootstrap:4.0.0-alpha'
-      'org.webjars:webjars-locator'
-      
-      'org.springframework.boot:spring-boot-starter-security'	
-      'org.springframework.security.oauth:spring-security-oauth2'
-      'org.springframework.plugin:spring-plugin-core'
-      
-      'com.h2database:h2'
-      'mysql:mysql-connector-java'
-    )
+  compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+  //compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+  compile 'org.springframework.boot:spring-boot-starter-data-rest'
+  compile 'org.springframework.data:spring-data-rest-hal-browser'
+  //compile 'org.springframework.boot:spring-boot-starter-freemarker'
+  compile 'org.springframework.boot:spring-boot-starter-hateoas'
+  compile 'org.springframework.boot:spring-boot-starter-mobile'
+  compile 'io.ratpack:ratpack-spring-boot:1.1.1'
+  //compile 'org.springframework.boot:spring-boot-starter-redis'    
+  compile 'org.springframework.session:spring-session'
+  compile 'org.springframework.boot:spring-boot-starter-web'
+  compile 'com.h2database:h2'
+  compile 'mysql:mysql-connector-java'
+
+  compile 'org.webjars:jquery:3.0.0-alpha1'
+  compile 'org.webjars:angularjs:2.0.0-alpha.19'
+  compile 'org.webjars:bootstrap:4.0.0-alpha'
+  compile 'org.webjars:webjars-locator'
+
+  compile 'org.springframework.boot:spring-boot-starter-security'	
+  compile 'org.springframework.security.oauth:spring-security-oauth2'
+  compile 'org.springframework.plugin:spring-plugin-core'
+  compile 'com.h2database:h2'
+  compile 'mysql:mysql-connector-java'
+
+  compile project(':weibo4j-oauth2-beta3.1.1')
   
-    testCompile(
-      'org.springframework.boot:spring-boot-starter-test'
-      'testCompile("com.jayway.jsonpath:json-path'
-    )
+  testCompile 'org.springframework.boot:spring-boot-starter-test'
+  testCompile 'com.jayway.jsonpath:json-path'
 }
 
 //eclipse {

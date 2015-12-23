@@ -40,7 +40,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -57,7 +58,7 @@ import weibo4j.org.json.JSONObject;
  */
 public class Response {
     private final static boolean DEBUG = Configuration.getDebug();
-    static Logger log = Logger.getLogger(Response.class.getName());
+    static Logger log = LogManager.getLogger(Response.class);
 
 
     private static ThreadLocal<DocumentBuilder> builders =
