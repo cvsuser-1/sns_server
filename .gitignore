@@ -45,3 +45,29 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+target/
+work/
+*.class
+
+# Ignore Intellij Idea project files
+*.iml
+*.ipr
+.idea
+atlassian-ide-plugin.xml
+out/
+
+# Ignore Eclipse project files
+.settings
+.project
+.classpath
+.externalToolBuilders
+
+# Ignore MacOSX files
+.DS_Store
+
+.gradle
+.idea
+build
+bin

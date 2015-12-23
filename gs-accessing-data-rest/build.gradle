@@ -25,38 +25,35 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    //compile('org.springframework.boot:spring-boot-starter-data-mongodb')
-    compile('org.springframework.boot:spring-boot-starter-data-rest')
-    compile('org.springframework.data:spring-data-rest-hal-browser')
-    //compile('org.springframework.boot:spring-boot-starter-freemarker')
-    compile('org.springframework.boot:spring-boot-starter-hateoas')
-    compile('org.springframework.boot:spring-boot-starter-mobile')
-    compile('io.ratpack:ratpack-spring-boot:1.1.1')
-    //compile('org.springframework.boot:spring-boot-starter-redis')    
-    compile('org.springframework.session:spring-session')
-    compile('org.springframework.boot:spring-boot-starter-web')
+  compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+  //compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+  compile 'org.springframework.boot:spring-boot-starter-data-rest'
+  compile 'org.springframework.data:spring-data-rest-hal-browser'
+  //compile 'org.springframework.boot:spring-boot-starter-freemarker'
+  compile 'org.springframework.boot:spring-boot-starter-hateoas'
+  compile 'org.springframework.boot:spring-boot-starter-mobile'
+  compile 'io.ratpack:ratpack-spring-boot:1.1.1'
+  //compile 'org.springframework.boot:spring-boot-starter-redis'    
+  compile 'org.springframework.session:spring-session'
+  compile 'org.springframework.boot:spring-boot-starter-web'
+  compile 'com.h2database:h2'
+  compile 'mysql:mysql-connector-java'
 
-    runtime('com.h2database:h2')
-    runtime('mysql:mysql-connector-java')
-    
-    //for front end.
-    compile 'org.webjars:jquery:3.0.0-alpha1'
-    compile 'org.webjars:angularjs:2.0.0-alpha.19'
-    compile 'org.webjars:bootstrap:4.0.0-alpha'
-    compile 'org.webjars:webjars-locator'
-    
-    compile('org.springframework.boot:spring-boot-starter-security')	
-    compile("org.springframework.security.oauth:spring-security-oauth2")
-    compile("org.springframework.plugin:spring-plugin-core")
-    
-    compile("com.h2database:h2")
-    compile("mysql:mysql-connector-java")
-    
-    //testCompile("junit:junit")
-    
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("com.jayway.jsonpath:json-path")
+  compile 'org.webjars:jquery:3.0.0-alpha1'
+  compile 'org.webjars:angularjs:2.0.0-alpha.19'
+  compile 'org.webjars:bootstrap:4.0.0-alpha'
+  compile 'org.webjars:webjars-locator'
+
+  compile 'org.springframework.boot:spring-boot-starter-security'	
+  compile 'org.springframework.security.oauth:spring-security-oauth2'
+  compile 'org.springframework.plugin:spring-plugin-core'
+  compile 'com.h2database:h2'
+  compile 'mysql:mysql-connector-java'
+
+  compile project(':weibo4j-oauth2-beta3.1.1')
+  
+  testCompile 'org.springframework.boot:spring-boot-starter-test'
+  testCompile 'com.jayway.jsonpath:json-path'
 }
 
 //eclipse {
@@ -65,6 +62,4 @@ dependencies {
 //         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
 //    }
 //}
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.9'
-}
+

@@ -1,0 +1,55 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+jar {
+    baseName = 'sinaweibo4j-oauth2'
+    version = 'beta3.1.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+//sourceSets {
+//    main {
+//        java {
+//            srcDir 'src/main/java'
+//        }
+//        resources {
+//            srcDir 'src/resources'
+//        }
+//    }
+//}
+
+dependencies {
+    compile 'commons-codec:commons-codec:1.10'
+//    compile 'org.apache.httpcomponents:httpclient:4.5.1'
+    compile 'commons-httpclient:commons-httpclient:3.1'
+    compile 'commons-logging:commons-logging:1.2'
+    compile 'org.codehaus.jackson:jackson-core-lgpl:1.9.13'
+    compile 'org.apache.logging.log4j:log4j-api:2.5'
+    
+    testCompile  'junit:junit:4.12'
+    testCompile  'com.jayway.jsonpath:json-path:2.1.0'
+    
+}
+
+//eclipse {
+//    classpath {
+//         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+//         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+//    }
+//}
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}

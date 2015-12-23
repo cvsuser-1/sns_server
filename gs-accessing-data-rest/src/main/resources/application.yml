@@ -6,6 +6,20 @@ security:
       scope: read,write
       auto-approve-scopes: '.*'
 
+#https://api.weibo.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI
+#https://api.weibo.com/oauth2/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=authorization_code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI&code=CODE
+#https://api.weibo.com/oauth2/access_token
+#https://api.weibo.com/oauth2/authorize
+Weibo:
+  client:
+    clientId: 3743478173
+    clientSecret: 4453fbc77c9a28b5a30cfd25a9d0d360
+    accessTokenUri: https://api.weibo.com/oauth2/access_token
+    userAuthorizationUri: https://api.weibo.com/oauth2/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.weibo.com/2/users/show.json 
+
 facebook:
   client:
     clientId: 233668646673605
@@ -25,23 +39,19 @@ github:
     userAuthorizationUri: https://github.com/login/oauth/authorize
     clientAuthenticationScheme: form
   resource:
-    userInfoUri: https://api.github.com/user      
- 
+    userInfoUri: https://api.github.com/user
 
 logging:
   level:
     org.springframework.security: DEBUG
-    
-# Show or not log for each sql query
+
 spring:
-  profiles:
-    active: dev
-  jpa:
-    show-sql: true
-    # Hibernate ddl auto (create, create-drop, update)
-    hibernate:
-    ddl-auto: update
-  # To activate the webjar locator we just need to activate the Spring MVC resource chain in our application.properties:
   resources:
     chain:
       enabled: true
+      
+# Show or not log for each sql query
+  jpa.show-sql: true
+# Hibernate ddl auto (create, create-drop, update)
+  jpa.hibernate.ddl-auto: update
+  profiles.active: dev      

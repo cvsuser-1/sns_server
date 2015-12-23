@@ -51,30 +51,6 @@ import restful.hello.bookmarks.BookmarkRepository;
 // curl -X POST -vu android-bookmarks:123456 http://localhost:8080/oauth/token -H "Accept: application/json" -d "password=password&username=jlong&grant_type=password&scope=write&client_secret=123456&client_id=android-bookmarks"
 // curl -v POST http://127.0.0.1:8080/tags --data "tags=cows,dogs"  -H "Authorization: Bearer 66953496-fc5b-44d0-9210-b0521863ffcb"
 
-
-@Configuration
-class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
-
-	@Autowired
-	AccountRepository accountRepository;
-
-	@Override
-	public void init(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService());
-	}
-
-	@Bean
-	UserDetailsService userDetailsService() {
-		return (username) -> accountRepository
-				.findByUsername(username)
-				.map(a -> new User(a.username, a.password, true, true, true, true,
-						AuthorityUtils.createAuthorityList("USER", "write")))
-				.orElseThrow(
-						() -> new UsernameNotFoundException("could not find the user '"
-								+ username + "'"));
-	}
-}
-
 @Configuration
 @EnableResourceServer
 @EnableAuthorizationServer

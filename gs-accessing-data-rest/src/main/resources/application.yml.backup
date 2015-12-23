@@ -1,0 +1,60 @@
+security:
+  oauth2:
+    client:
+      client-id: acme
+      client-secret: acmesecret
+      scope: read,write
+      auto-approve-scopes: '.*'
+
+#https://api.weibo.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI
+#https://api.weibo.com/oauth2/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=authorization_code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI&code=CODE
+#https://api.weibo.com/oauth2/access_token
+#https://api.weibo.com/oauth2/authorize
+sinaweibo:
+  client:
+    clientId: Key£º3743478173
+    clientSecret: 4453fbc77c9a28b5a30cfd25a9d0d360
+    accessTokenUri: https://api.weibo.com/oauth2/access_token
+    userAuthorizationUri: https://api.weibo.com/oauth2/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.weibo.com/2/users/show.json 
+
+facebook:
+  client:
+    clientId: 233668646673605
+    clientSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
+    accessTokenUri: https://graph.facebook.com/oauth/access_token
+    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+    tokenName: oauth_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://graph.facebook.com/me
+github:
+  client:
+    clientId: bd1c0a783ccdd1c9b9e4
+    clientSecret: 1a9030fbca47a5b2c28e92f19050bb77824b5ad1
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user      
+ 
+logging:
+  level:
+    org.springframework.security: DEBUG
+    
+# Show or not log for each sql query
+# Hibernate ddl auto (create, create-drop, update)
+# To activate the webjar locator we just need to activate the Spring MVC resource chain in our application.properties:
+spring:
+  profiles.active: dev
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  resources:
+    chain:
+      enabled: true
