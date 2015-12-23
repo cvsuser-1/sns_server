@@ -60,21 +60,24 @@ import org.springframework.web.util.WebUtils;
 
 @Configuration
 @RestController
-@EnableOAuth2Sso
-@EnableAuthorizationServer
+//@EnableOAuth2Sso
+@EnableOAuth2Client
+// @EnableAuthorizationServer
 @Order(6)
 public class MainRestController extends WebSecurityConfigurerAdapter {
 
 	OAuth2ClientContext oauth2ClientContext;
-	
+
 	@Autowired
 	public MainRestController(OAuth2ClientContext oauth2ClientContext) {
 		super();
 		this.oauth2ClientContext = oauth2ClientContext;
 	}
-  public MainRestController() {
-    super();
+
+	public MainRestController() {
+		super();
 	}
+
 	@RequestMapping({ "/study/user", "/study/me" })
 	public Map<String, String> user(Principal principal) {
 		Map<String, String> map = new LinkedHashMap<>();
@@ -175,38 +178,88 @@ public class MainRestController extends WebSecurityConfigurerAdapter {
 		return new ClientResources();
 	}
 
+	/*
+	 * @Bean
+	 * 
+	 * @ConfigurationProperties("github") ClientResources github() { return new
+	 * ClientResources(); }
+	 */
+
 	@Bean
-	@ConfigurationProperties("github")
-	ClientResources github() {
-		return new ClientResources();
+	@ConfigurationProperties("github.client")
+	OAuth2ProtectedResourceDetails github() {
+		return new AuthorizationCodeResourceDetails();
 	}
 
 	@Bean
-	@ConfigurationProperties("facebook")
-	ClientResources facebook() {
-		return new ClientResources();
+	@ConfigurationProperties("github.resource")
+	ResourceServerProperties githubResource() {
+		return new ResourceServerProperties();
 	}
+
+	@Bean
+	@ConfigurationProperties("facebook.client")
+	OAuth2ProtectedResourceDetails facebook() {
+		return new AuthorizationCodeResourceDetails();
+	}
+
+	@Bean
+	@ConfigurationProperties("facebook.resource")
+	ResourceServerProperties facebookResource() {
+		return new ResourceServerProperties();
+	}
+
+	/*
+	 * @Bean
+	 * 
+	 * @ConfigurationProperties("facebook") ClientResources facebook() { return
+	 * new ClientResources(); }
+	 */
 
 	private Filter ssoFilter() {
-		CompositeFilter filter = new CompositeFilter();
 
+		CompositeFilter filter = new CompositeFilter();
 		List<Filter> filters = new ArrayList<>();
-		filters.add(ssoFilter(facebook(), "/login/facebook"));
-		filters.add(ssoFilter(github(), "/login/github"));
+
+		OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
+				"/login/facebook");
+		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
+		facebookFilter.setRestTemplate(facebookTemplate);
+		facebookFilter.setTokenServices(
+				new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId()));
+		filters.add(facebookFilter);
+
+		OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter(
+				"/login/github");
+		OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(github(), oauth2ClientContext);
+		githubFilter.setRestTemplate(githubTemplate);
+		githubFilter
+				.setTokenServices(new UserInfoTokenServices(githubResource().getUserInfoUri(), github().getClientId()));
+		filters.add(githubFilter);
 
 		filter.setFilters(filters);
 		return filter;
-	}
 
-	private Filter ssoFilter(ClientResources client, String path) {
-		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
-				path);
-		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
-		filter.setRestTemplate(facebookTemplate);
-		filter.setTokenServices(
-				new UserInfoTokenServices(client.getResource().getUserInfoUri(), client.getClient().getClientId()));
-		return filter;
 	}
+	/*
+	 * private Filter ssoFilterAsServer() { CompositeFilter filter = new
+	 * CompositeFilter();
+	 * 
+	 * List<Filter> filters = new ArrayList<>();
+	 * filters.add(ssoFilterAsServer(facebook(), "/login/facebook"));
+	 * filters.add(ssoFilterAsServer(github(), "/login/github"));
+	 * 
+	 * filter.setFilters(filters); return filter; }
+	 * 
+	 * private Filter ssoFilterAsServer(ClientResources client, String path) {
+	 * OAuth2ClientAuthenticationProcessingFilter filter = new
+	 * OAuth2ClientAuthenticationProcessingFilter(path); OAuth2RestTemplate
+	 * facebookTemplate = new OAuth2RestTemplate(client.getClient(),
+	 * oauth2ClientContext); filter.setRestTemplate(facebookTemplate);
+	 * filter.setTokenServices( new
+	 * UserInfoTokenServices(client.getResource().getUserInfoUri(),
+	 * client.getClient().getClientId())); return filter; }
+	 */
 
 	private Filter csrfHeaderFilter() {
 		return new OncePerRequestFilter() {
