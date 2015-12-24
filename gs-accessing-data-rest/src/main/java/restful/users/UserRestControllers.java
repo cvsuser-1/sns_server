@@ -60,7 +60,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 }
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/account")
 public class UserRestControllers {
 
 	private final PatientsRepository patientsRepository;

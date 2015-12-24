@@ -1,11 +1,17 @@
+<!--
 <filter>
+  <filter-name>myFilter</filter-name>
+  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
   <filter-name>WebResourceOptimizer</filter-name>
-  <filter-class>
-    ro.isdc.wro.http.WroFilter
-  </filter-class>
+  <filter-class>ro.isdc.wro.http.WroFilter</filter-class>
 </filter>
  
 <filter-mapping>
   <filter-name>WebResourceOptimizer</filter-name>
   <url-pattern>/wro/*</url-pattern>
+  <filter-name>myFilter</filter-name>
+  <url-pattern>/*</url-pattern>
 </filter-mapping>
+
+
+-->

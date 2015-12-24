@@ -49,6 +49,8 @@ dependencies {
   compile 'org.webjars:bootstrap:4.0.0-alpha'
   compile 'org.webjars:webjars-locator'
 
+  compile 'org.springframework.boot:spring-boot-starter-actuator'
+  
   compile 'com.h2database:h2'
   compile 'mysql:mysql-connector-java'
 
