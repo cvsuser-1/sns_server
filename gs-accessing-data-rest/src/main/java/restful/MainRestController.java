@@ -32,11 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainRestController {
 
 	@Autowired
-	OAuth2ClientContext oauth2ClientContext;
+	protected OAuth2ClientContext oauth2ClientContext;
 
 	@RequestMapping({ "/study/user", "/study/me" })
 	public Map<String, String> user(Principal principal) {
-		Map<String, String> map = new LinkedHashMap<>();
+		Map<String, String> map = new LinkedHashMap<String,String>();
 		map.put("name", principal.getName());
 		return map;
 	}
@@ -54,7 +54,7 @@ public class MainRestController {
 
 	// CORS
 	@Bean
-	FilterRegistrationBean corsFilter(@Value("${tagit.origin:http://localhost:9000}") String origin) {
+	FilterRegistrationBean corsFilter(@Value("${tagit.origin:http://localhost:9000}") final String origin) {
 		return new FilterRegistrationBean(new Filter() {
 			public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 					throws IOException, ServletException {
