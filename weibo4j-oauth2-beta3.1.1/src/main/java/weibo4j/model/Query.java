@@ -230,8 +230,8 @@ public class Query {
 			String getMethodName = "get" + firstLetter+ fieldName.substring(1); 
 			Method getMethod;
 			try {
-				getMethod = clz.getMethod(getMethodName, new Class[] {});
-				Object value = getMethod.invoke(this, new Object[] {}); 
+				getMethod = clz.getMethod(getMethodName);
+				Object value = getMethod.invoke(this);
 				if(value!=null){
 					list.add(getParameterValue(fieldName, value));
 				}

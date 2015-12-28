@@ -52,25 +52,24 @@ public class MySSLSocketFactory implements ProtocolSocketFactory {
 	}
 
 	public Socket createSocket(Socket socket, String host, int port,
-			boolean autoClose) throws IOException, UnknownHostException {
+			boolean autoClose) throws IOException {
 		return getSSLContext().getSocketFactory().createSocket(socket, host,
 				port, autoClose);
 	}
 
-	public Socket createSocket(String host, int port) throws IOException,
-			UnknownHostException {
+	public Socket createSocket(String host, int port) throws IOException {
 		return getSSLContext().getSocketFactory().createSocket(host, port);
 	}
 
 	public Socket createSocket(String host, int port, InetAddress clientHost,
-			int clientPort) throws IOException, UnknownHostException {
+			int clientPort) throws IOException {
 		return getSSLContext().getSocketFactory().createSocket(host, port,
 				clientHost, clientPort);
 	}
 
 	public Socket createSocket(String host, int port, InetAddress localAddress,
 			int localPort, HttpConnectionParams params) throws IOException,
-			UnknownHostException, ConnectTimeoutException {
+			ConnectTimeoutException {
 		if (params == null) {
 			throw new IllegalArgumentException("Parameters may not be null");
 		}

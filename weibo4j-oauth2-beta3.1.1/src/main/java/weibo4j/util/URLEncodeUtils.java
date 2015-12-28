@@ -92,10 +92,7 @@ public class URLEncodeUtils {
 				containsPercent = true;
 			}
 		}
-		if(!containsPercent){
-			return false;
-		}
-		return true;
+		return containsPercent;
 	}
 
 	public static final String encodeURL(String str) {

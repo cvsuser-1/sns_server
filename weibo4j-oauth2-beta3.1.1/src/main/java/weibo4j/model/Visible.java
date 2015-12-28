@@ -43,9 +43,7 @@ public class Visible {
 		Visible other = (Visible) obj;
 		if (list_id != other.list_id)
 			return false;
-		if (type != other.type)
-			return false;
-		return true;
+		return type == other.type;
 	}
 	@Override
 	public String toString() {

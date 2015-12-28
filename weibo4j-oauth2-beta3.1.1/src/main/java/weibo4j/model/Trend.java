@@ -92,11 +92,9 @@ public class Trend implements java.io.Serializable{
         Trend trend = (Trend) o;
 
         if (!name.equals(trend.name)) return false;
-        if (query != null ? !query.equals(trend.query) : trend.query != null)
-            return false;
+    return !(query != null ? !query.equals(trend.query) : trend.query != null);
 
-        return true;
-    }
+  }
 
     @Override
     public int hashCode() {

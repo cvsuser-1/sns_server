@@ -159,10 +159,8 @@ public class Trends extends WeiboResponse implements Comparable<Trends> {
 		if (trendAt != null ? !trendAt.equals(trends1.trendAt)
 				: trends1.trendAt != null)
 			return false;
-		if (!Arrays.equals(trends, trends1.trends))
-			return false;
+		return Arrays.equals(trends, trends1.trends);
 
-		return true;
 	}
 
 	@Override
