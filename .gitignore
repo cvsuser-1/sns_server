@@ -54,6 +54,7 @@ work/
 # Ignore Intellij Idea project files
 *.iml
 *.ipr
+*.iws
 .idea
 local.properties
 gs-accessing-data-rest.iml
