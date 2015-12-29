@@ -12,12 +12,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -45,6 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 @Configuration
 @RestController
 @EnableOAuth2Client
+@EnableAuthorizationServer
 public class EndpointAccessControl extends WebSecurityConfigurerAdapter {
 
   @Autowired
@@ -70,12 +73,19 @@ public class EndpointAccessControl extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**", "/webjars/**").permitAll().anyRequest()
+    LogoutConfigurer<HttpSecurity> httpSecurityLogoutConfigurer = http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**", "/webjars/**").permitAll().anyRequest()
         .authenticated().and().exceptionHandling()
         .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
         .logoutSuccessUrl("/").permitAll().and().csrf().csrfTokenRepository(csrfTokenRepository()).and()
         .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
-        .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+        .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+        .logout()
+        .logoutUrl("/my/logout")
+        .logoutSuccessUrl("/my/index")
+        .logoutSuccessHandler((request, response, authentication)->{})
+        .invalidateHttpSession(true)
+        .addLogoutHandler((request, response, authentication) -> {})
+        .deleteCookies("SessionID");
     // @formatter:on
   }
 
