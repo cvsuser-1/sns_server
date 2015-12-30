@@ -16,15 +16,14 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import restful.PhotoInfo;
-import restful.PhotoService;
+import restful.model.common.PhotoInfo;
+import restful.model.common.PhotoService;
 import restful.controller.AdminController;
 import restful.controller.PhotoController;
 import restful.controller.PhotoServiceUserController;
@@ -116,10 +115,5 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		photo.setUserId(userId);
 		photo.setResourceURL("/org/springframework/security/oauth/examples/sparklr/impl/resources/" + photo.getName());
 		return photo;
-	}
-
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
 	}
 }

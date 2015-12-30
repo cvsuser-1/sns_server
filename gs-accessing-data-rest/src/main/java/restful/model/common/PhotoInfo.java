@@ -1,4 +1,4 @@
-package com.hybroad.sparklr;
+package restful.model.common;
 
 /**
  * Photo information.

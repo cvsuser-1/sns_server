@@ -29,10 +29,6 @@ targetCompatibility = 1.8
 //compile 'org.springframework.boot:spring-boot-starter-freemarker'
 dependencies {
   compile 'io.ratpack:ratpack-spring-boot:1.1.1'
-  compile ('org.springframework.boot:spring-boot-starter-web'){
-    exclude module: 'org.springframework.boot:spring-boot-starter-logging'
-    exclude module: 'org.slf4j:log4j-over-slf4j'
-  }
   compile 'org.springframework.data:spring-data-rest-hal-browser'
   compile 'org.springframework.boot:spring-boot-starter-hateoas'
   compile 'org.springframework.boot:spring-boot-starter-mobile'

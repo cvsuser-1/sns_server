@@ -176,6 +176,7 @@ public class OAuth2ServerConfig {
 
 	}
 
+	@Configuration
 	protected static class Stuff {
 
 		@Autowired

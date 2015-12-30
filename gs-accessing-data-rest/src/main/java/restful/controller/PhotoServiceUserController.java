@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 
-import restful.PhotoServiceUser;
+import restful.model.common.PhotoServiceUser;
 
 /**
  * @author Michael Lavelle

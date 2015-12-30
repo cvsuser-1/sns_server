@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import restful.PhotoInfo;
-import restful.PhotoService;
+import restful.model.common.PhotoInfo;
+import restful.model.common.PhotoService;
 
 /**
  * Basic implementation for the photo service.

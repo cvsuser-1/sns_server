@@ -17,8 +17,8 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Iterator;
 
-import restful.PhotoInfo;
-import restful.PhotoService;
+import restful.model.common.PhotoInfo;
+import restful.model.common.PhotoService;
 
 /**
  * @author Ryan Heaton

@@ -1,4 +1,4 @@
-package restful;
+package restful.model.common;
 
 /**
  * Photo service user information - added to enable user information to be available to Spring Social client

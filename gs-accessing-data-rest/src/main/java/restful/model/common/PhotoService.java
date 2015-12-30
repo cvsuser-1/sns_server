@@ -1,4 +1,4 @@
-package restful;
+package restful.model.common;
 
 import java.io.InputStream;
 import java.util.Collection;
