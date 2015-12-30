@@ -61,10 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     http
         .authorizeRequests()
         .antMatchers("/index.html").permitAll()
-        .anyRequest().hasRole("USER")
-        .and()
-        .exceptionHandling()
-        .accessDeniedPage("/login.jsp?authorization_error=true")
+        //.anyRequest().hasRole("USER").exceptionHandling().accessDeniedPage("/login.jsp?authorization_error=true")
+        .anyRequest().authenticated()
         .and()
         // TODO: put CSRF protection back into this endpoint
         .csrf().csrfTokenRepository(csrfTokenRepository()).requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))

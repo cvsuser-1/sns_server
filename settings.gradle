@@ -1,3 +1,2 @@
 include 'weibo4j-oauth2-beta3.1.1'
 include 'gs-accessing-data-rest'
-include 'OAuth2/tonr'

@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Ryan Heaton
  */
 @Controller
-@RequestMapping("/account")
+//@RequestMapping("/account")
 @SessionAttributes("authorizationRequest")
 public class AccessConfirmationController {
   final static Logger logger = Logger.getLogger(AccessConfirmationController.class);
@@ -47,6 +47,26 @@ public class AccessConfirmationController {
 
   private ApprovalStore approvalStore;
 
+  @RequestMapping("/oauth/check_token")
+  public ModelAndView getGitHubAccessConfirmation(Map<String, Object> model, Principal principal) throws Exception {
+    AuthorizationRequest clientAuth = (AuthorizationRequest) model.remove("authorizationRequest");
+    ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
+    logger.info("login user " + principal.getName());
+    model.put("auth_request", clientAuth);
+    model.put("client", client);
+    Map<String, String> scopes = new LinkedHashMap<String, String>();
+    for (String scope : clientAuth.getScope()) {
+      scopes.put(OAuth2Utils.SCOPE_PREFIX + scope, "false");
+    }
+    for (Approval approval : approvalStore.getApprovals(principal.getName(), client.getClientId())) {
+      if (clientAuth.getScope().contains(approval.getScope())) {
+        scopes.put(OAuth2Utils.SCOPE_PREFIX + approval.getScope(),
+            approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
+      }
+    }
+    model.put("scopes", scopes);
+    return new ModelAndView("access_confirmation", model);
+  }
   @RequestMapping("/github/oauth/confirm_access")
   public ModelAndView getFacebookAccessConfirmation(Map<String, Object> model, Principal principal) throws Exception {
     AuthorizationRequest clientAuth = (AuthorizationRequest) model.remove("authorizationRequest");
