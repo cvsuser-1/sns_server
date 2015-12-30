@@ -1,4 +1,4 @@
-package restful.hello.bookmarks;
+package restful.model.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -8,27 +8,27 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Bookmark {
+public class ElectricHealthRecord {
 
   public String uri;
   public String description;
   @JsonIgnore
   @ManyToOne
-  private Account account;
+  private Patient patient;
   @Id
   @GeneratedValue
   private Long id;
 
-  public Bookmark() { // jpa only
+  ElectricHealthRecord() { // jpa only
   }
-  public Bookmark(Account account, String uri, String description) {
+  public ElectricHealthRecord(Patient patient, String uri, String description) {
     this.uri = uri;
     this.description = description;
-    this.account = account;
+    this.patient = patient;
   }
 
-  public Account getAccount() {
-    return account;
+  public Patient getPatient() {
+    return patient;
   }
 
   public Long getId() {

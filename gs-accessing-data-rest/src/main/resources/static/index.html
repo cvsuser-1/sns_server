@@ -34,10 +34,14 @@
 	</div>
 	<div class="container" ng-show="home.authenticated">
 		Logged in as: <span ng-bind="home.user"></span>
+        <div>
+            Test: <a href="/account/github/oauth/confirm_access">click here</a>
+        </div>
 		<div>
 			<button ng-click="home.logout()" class="btn btn-primary">Logout</button>
 		</div>
 	</div>
+
 	<script type="text/javascript" src="/webjars/angularjs/angular2.js"></script>
 	<script type="text/javascript">
 		angular

@@ -41,9 +41,9 @@ github:
   resource:
     userInfoUri: https://api.github.com/user
 
-logging:
-  level:
-    org.springframework.security: DEBUG
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
 
 security.user.name: admin
 security.user.password: secret
