@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
         .authorizeRequests()
-        .antMatchers("/login.jsp").permitAll()
+        .antMatchers("/index.html").permitAll()
         .anyRequest().hasRole("USER")
         .and()
         .exceptionHandling()
@@ -84,7 +84,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .formLogin()
         .loginProcessingUrl("/login")
         .failureUrl("/login.jsp?authentication_error=true")
-        .loginPage("/login.jsp");
+        .loginPage("/index.html");
     // @formatter:on
   }
 

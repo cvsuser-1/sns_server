@@ -32,7 +32,7 @@ import restful.impl.PhotoServiceImpl;
 import restful.oauth.SparklrUserApprovalHandler;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
@@ -40,24 +40,24 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 
-	@Bean
-	public ContentNegotiatingViewResolver contentViewResolver() throws Exception {
-		ContentNegotiationManagerFactoryBean contentNegotiationManager = new ContentNegotiationManagerFactoryBean();
-		contentNegotiationManager.addMediaType("json", MediaType.APPLICATION_JSON);
-
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setPrefix("/WEB-INF/jsp/");
-		viewResolver.setSuffix(".jsp");
-
-		MappingJackson2JsonView defaultView = new MappingJackson2JsonView();
-		defaultView.setExtractValueFromSingleKeyModel(true);
-
-		ContentNegotiatingViewResolver contentViewResolver = new ContentNegotiatingViewResolver();
-		contentViewResolver.setContentNegotiationManager(contentNegotiationManager.getObject());
-		contentViewResolver.setViewResolvers(Arrays.<ViewResolver> asList(viewResolver));
-		contentViewResolver.setDefaultViews(Arrays.<View> asList(defaultView));
-		return contentViewResolver;
-	}
+//	@Bean
+//	public ContentNegotiatingViewResolver contentViewResolver() throws Exception {
+//		ContentNegotiationManagerFactoryBean contentNegotiationManager = new ContentNegotiationManagerFactoryBean();
+//		contentNegotiationManager.addMediaType("json", MediaType.APPLICATION_JSON);
+//
+//		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+//		viewResolver.setPrefix("/WEB-INF/jsp/");
+//		viewResolver.setSuffix(".jsp");
+//
+//		MappingJackson2JsonView defaultView = new MappingJackson2JsonView();
+//		defaultView.setExtractValueFromSingleKeyModel(true);
+//
+//		ContentNegotiatingViewResolver contentViewResolver = new ContentNegotiatingViewResolver();
+//		contentViewResolver.setContentNegotiationManager(contentNegotiationManager.getObject());
+//		contentViewResolver.setViewResolvers(Arrays.<ViewResolver> asList(viewResolver));
+//		contentViewResolver.setDefaultViews(Arrays.<View> asList(defaultView));
+//		return contentViewResolver;
+//	}
 
 	@Bean
 	public PhotoServiceUserController photoServiceUserController(PhotoService photoService) {
