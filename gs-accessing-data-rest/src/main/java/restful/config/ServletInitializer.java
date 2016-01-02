@@ -13,10 +13,12 @@
 
 package restful.config;
 
+import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
 import javax.servlet.ServletContext;
@@ -41,6 +43,8 @@ public class ServletInitializer extends AbstractDispatcherServletInitializer {
 
   @Override
   protected WebApplicationContext createRootApplicationContext() {
+
+
     return null;
   }
 

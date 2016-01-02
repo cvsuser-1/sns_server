@@ -1,4 +1,4 @@
-package restful.config;
+package restful.oauth.OtherProviderAuthentication.config;
 
 import org.apache.log4j.Logger;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;

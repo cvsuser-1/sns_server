@@ -30,6 +30,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import restful.oauth.OtherProviderAuthentication.config.OAuth2ClientConfig;
+
 @Configuration
 @EnableWebSecurity
 @Import(OAuth2ClientConfig.class)
