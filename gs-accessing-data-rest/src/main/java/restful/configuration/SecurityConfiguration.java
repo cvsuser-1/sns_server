@@ -1,23 +1,20 @@
-package restful.config;
+package restful.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -30,7 +27,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import restful.oauth.OtherProviderAuthentication.config.OAuth2ClientConfig;
+import restful.oauth.OtherProviderAuthentication.OAuth2ClientConfig;
 
 @Configuration
 @EnableWebSecurity
@@ -42,8 +39,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication().withUser("marissa").password("koala").roles("USER").and().withUser("paul")
-        .password("emu").roles("USER");
+    auth.inMemoryAuthentication()
+        .withUser("marissa").password("koala").roles("USER")
+        .and()
+        .withUser("paul").password("emu").roles("USER");
   }
 
   @Override
@@ -60,32 +59,45 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http
-        .authorizeRequests()
+    http.authorizeRequests()
+        .antMatchers("/**").permitAll()
+        .antMatchers("/sparklr/**", "/facebook/**").hasRole("USER")
         .antMatchers("/index.html").permitAll()
-        //.anyRequest().hasRole("USER").exceptionHandling().accessDeniedPage("/login.jsp?authorization_error=true")
-        .anyRequest().authenticated()
+        .anyRequest().permitAll()
         .and()
-        // TODO: put CSRF protection back into this endpoint
-        .csrf().csrfTokenRepository(csrfTokenRepository()).requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
-        .disable()
-        .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
-        .addFilterBefore(singleSignOnFilter, BasicAuthenticationFilter.class)
         .logout()
-        .logoutUrl("/logout")
         .logoutSuccessUrl("/login.jsp")
-        .logoutSuccessHandler((request, response, authentication) -> {
-        })
-        .invalidateHttpSession(true)
-        .addLogoutHandler((request, response, authentication) -> {
-        })
-        .deleteCookies("SessionID")
+        .permitAll()
         .and()
         .formLogin()
         .loginProcessingUrl("/login")
+        .loginPage("/login.jsp")
         .failureUrl("/login.jsp?authentication_error=true")
-        .loginPage("/index.html");
+        .permitAll();
     // @formatter:on
+//    // @formatter:off
+//    http
+//        .authorizeRequests()
+//        .antMatchers("/**").permitAll()
+//        .anyRequest().hasRole("USER")
+//        .and()
+//        .exceptionHandling()
+//        .accessDeniedPage("/login.jsp?authorization_error=true")
+//        .and()
+//        // TODO: put CSRF protection back into this endpoint
+//        .csrf().csrfTokenRepository(csrfTokenRepository()).requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
+//        .disable()
+//        .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
+//        .addFilterBefore(singleSignOnFilter, BasicAuthenticationFilter.class)
+//        .logout()
+//        .logoutUrl("/logout")
+//        .logoutSuccessUrl("/index.html")
+//        .and()
+//        .formLogin()
+//        .loginProcessingUrl("/login")
+//        .failureUrl("/index.html?authentication_error=true")
+//        .loginPage("/index.html");
+//    // @formatter:on
   }
 
   private Filter csrfHeaderFilter() {

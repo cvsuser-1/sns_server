@@ -1,4 +1,4 @@
-package restful.oauth.OtherProviderAuthentication.config;
+package restful.oauth.OtherProviderAuthentication;
 
 import org.apache.log4j.Logger;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -27,8 +27,6 @@ import javax.servlet.Filter;
 @EnableOAuth2Client
 public class OAuth2ClientConfig {
   final static Logger logger = Logger.getLogger(OAuth2ClientConfig.class);
-  //@Autowired
-  //private OAuth2ClientContext oauth2ClientContext;
 
   @Bean
   @ConfigurationProperties("sinaweibo")

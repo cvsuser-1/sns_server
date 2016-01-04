@@ -94,8 +94,8 @@ public class OAuth2ServerConfig {
 	@EnableAuthorizationServer
 	protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-		@Autowired
-		private TokenStore tokenStore;
+//		@Autowired
+//		private TokenStore tokenStore;
 
 		@Autowired
 		private UserApprovalHandler userApprovalHandler;
@@ -165,7 +165,7 @@ public class OAuth2ServerConfig {
 
 		@Override
 		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-			endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
+			endpoints.tokenStore(tokenStore()).userApprovalHandler(userApprovalHandler)
 					.authenticationManager(authenticationManager);
 		}
 

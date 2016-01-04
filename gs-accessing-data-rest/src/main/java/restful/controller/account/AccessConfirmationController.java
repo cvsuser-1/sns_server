@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Ryan Heaton
  */
 @Controller
-//@RequestMapping("/account")
+@RequestMapping("/account")
 @SessionAttributes("authorizationRequest")
 public class AccessConfirmationController {
   final static Logger logger = Logger.getLogger(AccessConfirmationController.class);
