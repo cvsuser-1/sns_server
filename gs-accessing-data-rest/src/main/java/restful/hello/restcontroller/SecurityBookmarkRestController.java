@@ -45,41 +45,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 // curl -X POST -vu android-bookmarks:123456 http://localhost:8080/oauth/token -H "Accept: application/json" -d "password=password&username=jlong&grant_type=password&scope=write&client_secret=123456&client_id=android-bookmarks"
 // curl -v POST http://127.0.0.1:8080/tags --data "tags=cows,dogs"  -H "Authorization: Bearer 66953496-fc5b-44d0-9210-b0521863ffcb"
 
-@Configuration
-@EnableResourceServer
-@EnableAuthorizationServer
-class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
-
-  String applicationName = "bookmarks";
-
-  // This is required for password grants, which we specify below as one of the
-  // {@literal authorizedGrantTypes()}.
-  @Autowired
-  AuthenticationManagerBuilder authenticationManager;
-
-  @Override
-  public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-      throws Exception {
-    // Workaround for https://github.com/spring-projects/spring-boot/issues/1801
-    endpoints.authenticationManager(new AuthenticationManager() {
-      @Override
-      public Authentication authenticate(Authentication authentication)
-          throws AuthenticationException {
-        return authenticationManager.getOrBuild().authenticate(authentication);
-      }
-    });
-  }
-
-  @Override
-  public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
-    clients.inMemory().withClient("android-" + applicationName)
-        .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-        .authorities("ROLE_USER").scopes("write").resourceIds(applicationName)
-        .secret("123456");
-  }
-}
-
 class BookmarkResourceS extends ResourceSupport {
 
   private final Bookmark bookmark;

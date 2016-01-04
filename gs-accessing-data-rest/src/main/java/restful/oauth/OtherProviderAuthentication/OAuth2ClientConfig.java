@@ -50,16 +50,16 @@ public class OAuth2ClientConfig {
   public Filter singleSignOnFilter(OAuth2ClientContext clientContext) {
     CompositeFilter filter = new CompositeFilter();
     List<Filter> filters = new ArrayList<>();
-    filters.add(ssoFilter(facebook(), facebookRestTemplate(clientContext), "/login/facebook"));
-    filters.add(ssoFilter(github(), githubRestTemplate(clientContext), "/login/github"));
-    filters.add(ssoFilter(sinaweibo(), sinaweiboRestTemplate(clientContext), "/login/sinaweibo"));
+    filters.add(ssoFilter(facebook(), facebookRestTemplate(clientContext), "/login/oauth2/facebook/user"));
+    filters.add(ssoFilter(github(), githubRestTemplate(clientContext), "/login/oauth2/github/user"));
+    filters.add(ssoFilter(sinaweibo(), sinaweiboRestTemplate(clientContext), "/login/oauth2/sinaweibo/user"));
     filter.setFilters(filters);
     return filter;
   }
 
   @Bean
   public OAuth2RestTemplate sinaweiboRestTemplate(OAuth2ClientContext clientContext) {
-    OAuth2RestTemplate template = new OAuth2RestTemplate(facebook().getClient(), clientContext);
+    OAuth2RestTemplate template = new OAuth2RestTemplate(sinaweibo().getClient(), clientContext);
     MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
     converter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON,
         MediaType.valueOf("text/javascript")));

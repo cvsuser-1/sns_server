@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Ryan Heaton
  */
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/login/oauth2")
 @SessionAttributes("authorizationRequest")
 public class AccessConfirmationController {
   final static Logger logger = Logger.getLogger(AccessConfirmationController.class);
@@ -47,7 +47,7 @@ public class AccessConfirmationController {
 
   private ApprovalStore approvalStore;
 
-  @RequestMapping("/oauth/check_token")
+  @RequestMapping("/check_token")
   public ModelAndView getGitHubAccessConfirmation(Map<String, Object> model, Principal principal) throws Exception {
     AuthorizationRequest clientAuth = (AuthorizationRequest) model.remove("authorizationRequest");
     ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
@@ -67,7 +67,8 @@ public class AccessConfirmationController {
     model.put("scopes", scopes);
     return new ModelAndView("access_confirmation", model);
   }
-  @RequestMapping("/github/oauth/confirm_access")
+
+  @RequestMapping("/github/user")
   public ModelAndView getFacebookAccessConfirmation(Map<String, Object> model, Principal principal) throws Exception {
     AuthorizationRequest clientAuth = (AuthorizationRequest) model.remove("authorizationRequest");
     ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
@@ -87,7 +88,7 @@ public class AccessConfirmationController {
     model.put("scopes", scopes);
     return new ModelAndView("access_confirmation", model);
   }
-  @RequestMapping("/sinaweibo/oauth/confirm_access")
+  @RequestMapping("/sinaweibo/user")
   public ModelAndView getSinaWeiboAccessConfirmation(Map<String, Object> model, Principal principal) throws Exception {
     AuthorizationRequest clientAuth = (AuthorizationRequest) model.remove("authorizationRequest");
     ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());

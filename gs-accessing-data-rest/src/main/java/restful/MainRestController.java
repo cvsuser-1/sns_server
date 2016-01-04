@@ -72,15 +72,4 @@ public class MainRestController {
       }
     });
   }
-
-  @Configuration
-  @EnableResourceServer
-  protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-      // @formatter:off
-      http.antMatcher("/me").authorizeRequests().anyRequest().authenticated();
-      // @formatter:on
-    }
-  }
 }

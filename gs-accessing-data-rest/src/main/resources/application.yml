@@ -12,13 +12,13 @@ security:
 #https://api.weibo.com/oauth2/authorize
 sinaweibo:
   client:
-    clientId: 3743478173
-    clientSecret: 4453fbc77c9a28b5a30cfd25a9d0d360
+    clientId: 3422197137
+    clientSecret: 7244618c623bcad57645cb158d108627
     accessTokenUri: https://api.weibo.com/oauth2/access_token
     userAuthorizationUri: https://api.weibo.com/oauth2/authorize
     clientAuthenticationScheme: form
   resource:
-    userInfoUri: https://api.weibo.com/2/users/show.json 
+    userInfoUri: https://api.weibo.com/2/users/show.json
 
 facebook:
   client:
