@@ -55,6 +55,8 @@ work/
 *.iml
 *.ipr
 .idea
+local.properties
+gs-accessing-data-rest.iml
 atlassian-ide-plugin.xml
 out/
 

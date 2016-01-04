@@ -1,0 +1,57 @@
+security:
+  oauth2:
+    client:
+      client-id: acme
+      client-secret: acmesecret
+      scope: read,write
+      auto-approve-scopes: '.*'
+
+#https://api.weibo.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI
+#https://api.weibo.com/oauth2/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=authorization_code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI&code=CODE
+#https://api.weibo.com/oauth2/access_token
+#https://api.weibo.com/oauth2/authorize
+sinaweibo:
+  client:
+    clientId: 3743478173
+    clientSecret: 4453fbc77c9a28b5a30cfd25a9d0d360
+    accessTokenUri: https://api.weibo.com/oauth2/access_token
+    userAuthorizationUri: https://api.weibo.com/oauth2/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.weibo.com/2/users/show.json 
+
+facebook:
+  client:
+    clientId: 233668646673605
+    clientSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
+    accessTokenUri: https://graph.facebook.com/oauth/access_token
+    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+    tokenName: oauth_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://graph.facebook.com/me
+github:
+  client:
+    clientId: 114c6d6585ac2e57eccb
+    clientSecret: 3835cc91b0b32445f036b6d7730ce20df64ac2e8
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+security.user.name: admin
+security.user.password: secret
+management.security.role: SUPERUSER
+
+spring:
+  resources:
+    chain:
+      enabled: true
+
+  profiles.active: dev      

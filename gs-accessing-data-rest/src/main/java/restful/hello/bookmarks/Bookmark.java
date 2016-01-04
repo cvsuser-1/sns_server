@@ -10,39 +10,36 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Bookmark {
 
-    @JsonIgnore
-    @ManyToOne
-    private Account account;
+  public String uri;
+  public String description;
+  @JsonIgnore
+  @ManyToOne
+  private Account account;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+  public Bookmark() { // jpa only
+  }
+  public Bookmark(Account account, String uri, String description) {
+    this.uri = uri;
+    this.description = description;
+    this.account = account;
+  }
 
-    public Bookmark() { // jpa only
-    }
+  public Account getAccount() {
+    return account;
+  }
 
-    public Bookmark(Account account, String uri, String description) {
-        this.uri = uri;
-        this.description = description;
-        this.account = account;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String uri;
-    public String description;
+  public String getUri() {
+    return uri;
+  }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+  public String getDescription() {
+    return description;
+  }
 }
