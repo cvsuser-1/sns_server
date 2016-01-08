@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/login/**", "/webjars/**", "/images/**", "/oauth/uncache_approvals", "/oauth/cache_approvals");
+    web.ignoring().antMatchers(/*"/login*//**",*/ "/","/webjars/**", "/images/**", "/oauth/uncache_approvals", "/oauth/cache_approvals");
   }
 
   @Override

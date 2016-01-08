@@ -3,6 +3,8 @@ package restful;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
@@ -13,7 +15,11 @@ import restful.hello.bookmarks.Bookmark;
 import restful.hello.bookmarks.BookmarkRepository;
 
 @SpringBootApplication
-public class PLMApplication {
+public class PLMApplication /*extends SpringBootServletInitializer*/ {
+//  @Override
+//  protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//    return super.configure(builder);
+//  }
 
   public static void main(String[] args) {
     SpringApplication.run(PLMApplication.class, args);

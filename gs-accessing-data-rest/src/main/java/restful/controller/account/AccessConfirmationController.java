@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Ryan Heaton
  */
 @Controller
-@RequestMapping("/login/oauth2")
+@RequestMapping("/account/oauth2")
 @SessionAttributes("authorizationRequest")
 public class AccessConfirmationController {
   final static Logger logger = Logger.getLogger(AccessConfirmationController.class);
