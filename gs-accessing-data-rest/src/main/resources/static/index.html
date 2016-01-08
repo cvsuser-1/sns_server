@@ -8,10 +8,10 @@
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width"/>
     <base href="/"/>
-    <!--link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/ -->
     <link rel='stylesheet' type="text/css" href='/webjars/bootstrap/css/bootstrap.min.css'>
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/webjarsjs"></script>
+    <script data-main="/js/app" src="/webjars/requirejs/require.min.js"></script>
+    <!--script src="/webjars/requirejs/require.min.js"></script-->
     <style type="text/css">
       [ng\:cloak], [ng-cloak], .ng-cloak {
         display: none !important;
@@ -19,63 +19,58 @@
     </style>
   </head>
 
-<body ng-app="app" ng-controller="home as home">
-	<h1>Login</h1>
-	<div class="container" ng-show="!home.authenticated">
-		<div>
-			With Facebook: <a href="/login/oauth2/github/user">click here</a>
-		</div>
-		<div>
-			With Github: <a href="/login/oauth2/github/user">click here</a>
-		</div>
-		<div>
-			With 新浪微博: <a href="/login/oauth2/sinaweibo/user">click here</a>
-		</div>
-	</div>
-	<div class="container" ng-show="home.authenticated">
-		Logged in as: <span ng-bind="home.user"></span>
-        <div>
-            Test: <a href="/oauth/check_token">新浪微博</a>
-        </div>
-        <div>
-            Test: <a href="/account/github/oauth/confirm_access">GitHub</a>
-        </div>
-		<div>
-			<button ng-click="home.logout()" class="btn btn-primary">Logout</button>
-		</div>
-	</div>
-
-	<script type="text/javascript" src="/webjars/angularjs/angular2.js"></script>
-	<script type="text/javascript">
-		angular
-				.module("app", [])
-				.config(
-						function($httpProvider) {
-							$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-						}).controller("home", function($http, $location) {
-					var self = this;
-					$http.get("/user").success(function(data) {
-						if (data.name) {
-							self.user = data.name;
-							self.authenticated = true;
-						} else {
-							self.user = "N/A";
-							self.authenticated = false;
-						}
-					}).error(function() {
-						self.user = "N/A";
-						self.authenticated = false;
-					});
-					self.logout = function() {
-						$http.post('logout', {}).success(function() {
-							self.authenticated = false;
-							$location.path("/");
-						}).error(function(data) {
-							console.log("Logout failed")
-							self.authenticated = false;
-						});
-					};
-				});
-	</script>
-    </body>
-  </html>
+  <body ng-app="hello" ng-cloak class="ng-cloak">
+    <div ng-controller="navigation" class="container">
+      <ul class="nav nav-pills" role="tablist">
+        <li ng-class="{active:tab('home')}"><a href="/">home</a></li>
+        <li ng-class="{active:tab('message')}"><a href="/message">message</a></li>
+        <li><a href="/login">login</a></li>
+        <li ng-show="authenticated()"><a href="" ng-click="logout()">logout</a></li>
+      </ul>
+    </div>
+    <div ng-view class="container"></div>
+    <script >
+//      requirejs(["angular", 'angular-route'], function(angular, ngRoute) {
+//        require(['js/domReady!'], function (doc) {
+//          domReady(function () {
+//            angular
+//            .module('hello', [ 'ngRoute', 'auth', 'home', 'message', 'navigation' ])
+//            .config(
+//            function($routeProvider, $httpProvider, $locationProvider) {
+//
+//              $locationProvider.html5Mode(true);
+//
+//              $routeProvider.when('/', {
+//                templateUrl : 'js/home/home.html',
+//                controller : 'home'
+//                }).when('/message', {
+//                templateUrl : 'js/message/message.html',
+//                controller : 'message'
+//                }).when('/login', {
+//                templateUrl : 'js/navigation/login.html',
+//                controller : 'navigation'
+//              }).otherwise('/');
+//
+//              $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+//
+//              }).run(function(auth) {
+//
+//              // Initialize auth module with the home page and login/logout path
+//              // respectively
+//              auth.init('/', '/login', '/logout');
+//
+//            });
+//          });
+//        });
+//      });
+    </script>
+    <!--
+    <script src="js/angular-bootstrap.js" type="text/javascript"></script>
+    <script src="js/auth/auth.js" type="text/javascript"></script>
+    <script src="js/home/home.js" type="text/javascript"></script>
+    <script src="js/message/message.js" type="text/javascript"></script>
+    <script src="js/navigation/navigation.js" type="text/javascript"></script>
+    <script src="js/hello.js" type="text/javascript"></script>
+    -->
+  </body>
+</html>
